@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import "./Dashboard.css";
+import ComfortChart from "./ComfortChart";
+
 
 const Dashboard = () => {
   const [cities, setCities] = useState([]);
@@ -68,7 +70,13 @@ const Dashboard = () => {
           </p>
         </div>
       ))}
+      
+        {/* grapch part  */}
+        <div style={{ padding: "20px" }}>
+        <ComfortChart data={cities} />
     </div>
+    </div>
+    
   );
 }
 
