@@ -4,13 +4,31 @@ import "./Dashboard.css";
 const Dashboard = () => {
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(true);
+  const CACHE_KEY = "weatherData";
+  const CACHE_TIME = 10 * 60 * 1000;
 
   useEffect(() => {
+
+    const cached = localStorage.getItem(CACHE_KEY);
+    if(cached){
+        const {data,timestamp} = JSON.parse(cached);
+        if(Date.now()-timestamp < CACHE_TIME){
+            setCities(data);
+            setLoading(false);
+            return;
+        }
+    }
+
+    //if no cache
     fetch("http://localhost:5000/api/weather")
       .then((res) => res.json())
       .then((data) => {
         setCities(data);
         setLoading(false);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({
+          data,
+          timestamp: Date.now()
+        }));
       })
       .catch((err) => console.error(err));
   }, []);
