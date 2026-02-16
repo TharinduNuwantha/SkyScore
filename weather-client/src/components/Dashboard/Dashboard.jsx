@@ -79,7 +79,7 @@ const Dashboard = () => {
   return (
 
     <div className="dashboard-container">
-      <form onSubmit={handleSearch} className="mb-8 flex gap-2 max-w-md">
+      <form onSubmit={handleSearch} className="search-section mb-8 flex gap-2 max-w-md">
         <input
           type="text"
           placeholder="Search any city (e.g. Paris, France)..."
@@ -120,7 +120,7 @@ const Dashboard = () => {
       ))}
 
       {/* grapch part  */}
-      <div style={{ padding: "20px" }}>
+      <div className="charts-section">
         <ComfortChart data={cities} />
 
         {/* Line chart */}

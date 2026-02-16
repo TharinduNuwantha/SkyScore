@@ -1,82 +1,39 @@
-/* Container grid */
+/* Modern Color Palette & Variables */
+:root {
+  --primary-color: #0ea5e9;    /* Sky Blue 500 */
+  --primary-dark: #0284c7;     /* Sky Blue 600 */
+  --bg-color: #f0f9ff;         /* Sky Blue 50 */
+  --card-bg: #ffffff;
+  --text-primary: #0f172a;     /* Slate 900 */
+  --text-secondary: #64748b;   /* Slate 500 */
+  --success: #22c55e;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+}
+
+body {
+  background-color: var(--bg-color);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* Main Container Layout */
 .dashboard-container {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
-  padding: 20px;
+  gap: 24px;
+  padding: 32px 20px;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
-/* City card */
-.city-card {
-  position: relative;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  background-color: #f8f8f8;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
-
-.city-card:hover {
-  transform: translateY(-5px);
-}
-
-/* Rank badge */
-.rank-badge {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  background-color: #4caf50;
-  color: white;
-  font-weight: bold;
-  width: 30px;
-  height: 30px;
-  text-align: center;
-  border-radius: 50%;
-  line-height: 30px;
-}
-
-/* City name */
-.city-name {
-  margin-top: 0;
-  margin-bottom: 10px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-/* Weather info */
-.weather,
-.temperature,
-.comfort-score {
-  margin: 5px 0;
-  font-size: 1rem;
-}
-
-/* Comfort score colors */
-.score.high {
-  color: #4caf50;
-  font-weight: bold;
-}
-.score.medium {
-  color: #ff9800;
-  font-weight: bold;
-}
-.score.low {
-  color: #f44336;
-  font-weight: bold;
-}
-
-/* Loading state */
-.loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 70vh;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-/* Responsive grid for desktop */
+/* Responsive Grid */
 @media (min-width: 768px) {
   .dashboard-container {
     grid-template-columns: repeat(2, 1fr);
@@ -87,4 +44,191 @@
   .dashboard-container {
     grid-template-columns: repeat(3, 1fr);
   }
+}
+
+/* Search Section - Spans Full Width */
+.search-section {
+  grid-column: 1 / -1;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  max-width: 600px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  
+  /* Overriding Tailwind if needed, but flex gap is handled there. 
+     Just adding some container constraints for centering */
+}
+
+/* Target the input within the search section for modern styling */
+.search-section input {
+  flex: 1;
+  padding: 12px 20px;
+  border: 1px solid #e2e8f0;
+  border-radius: 50px; /* Pill shape */
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  outline: none;
+}
+
+.search-section input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+}
+
+/* Target the button */
+.search-section button {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 12px 28px;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: var(--shadow-md);
+}
+
+.search-section button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* City Card Styling */
+.city-card {
+  position: relative;
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+
+/* Hover Effect for Cards */
+.city-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-color);
+}
+
+/* Rank Badge - Floating Style */
+.rank-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: linear-gradient(135deg, var(--warning), #fbbf24);
+  color: white;
+  font-weight: 800;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.9rem;
+  box-shadow: 0 2px 4px rgba(245, 158, 11, 0.4);
+  z-index: 10;
+}
+
+/* Typography in Cards */
+.city-name {
+  margin: 0 0 16px 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.025em;
+  background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; /* Makes text gradient */
+  display: inline-block;
+}
+
+/* Info Paragraphs */
+.weather, .temperature, .comfort-score {
+  margin: 8px 0;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 8px;
+}
+
+.weather:last-child, .temperature:last-child {
+  border-bottom: none;
+}
+
+.weather strong, .temperature strong, .comfort-score strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Comfort Score Badge */
+.score {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.score.high {
+  background-color: rgba(34, 197, 94, 0.1);
+  color: var(--success);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.score.medium {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--warning);
+  border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.score.low {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+/* Charts Section */
+.charts-section {
+  grid-column: 1 / -1; /* Spans full width */
+  background-color: var(--card-bg);
+  padding: 32px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-top: 20px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Chart titles or content inside charts section */
+.charts-section h3, .charts-section h4 {
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: var(--bg-color);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
