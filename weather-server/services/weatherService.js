@@ -45,3 +45,26 @@ export async function getWeatherData() {
         .sort((a, b) => b.comfortScore - a.comfortScore)
         .map((city, index) => ({ ...city, rank: index + 1 })); 
 }
+
+
+export async function searchCityWeather(cityName){
+    try{
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${API_KEY}&units=metric`;
+        const response = await axios.get(url);
+        const data = response.data;
+
+        const comfortScore = calculateComfortScore(data.main.temp, data.main.humidity, data.wind.speed);
+
+        return{
+            name: data.name,
+            country: data.sys.country,
+            temperature: data.main.temp,
+            weatherDescription: data.weather[0].description,
+            comfortScore: comfortScore,
+            icon: data.weather[0].icon,
+        }
+    }catch(err){
+        console.error(`Failed to fetch ${cityName}: ${err.message}`);
+        throw new Error("City not found");
+    }
+}

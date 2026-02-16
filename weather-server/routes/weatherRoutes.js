@@ -1,5 +1,5 @@
 import express from "express";
-import { getWeatherData } from "../services/weatherService.js";
+import { getWeatherData, searchCityWeather } from "../services/weatherService.js";
 
 const router = express.Router();
 
@@ -12,4 +12,17 @@ router.get("/",async(req,res)=>{
         res.status(500).json({error:"Something went wrong"})
     }
 });
+
+router.get("/search",async(req,res)=>{
+    const {city} = req.query;
+    if(!city) return res.status(400).json({error:"City query parameter is required"});
+    try{
+        const data = await searchCityWeather(city);
+        res.json(data);
+    }catch(error){
+        res.status(404).json({ error: error.message });
+    }
+});
+
+
 export default router;
