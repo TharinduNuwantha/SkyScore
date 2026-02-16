@@ -50,7 +50,19 @@ const Dashboard = () => {
     e.preventDefault();
     if (!searchTerm.trim()) return;
 
-
+    //cheack local data
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const { data, timestamp } = JSON.parse(cached);
+      if (Date.now() - timestamp < CACHE_TIME) {
+        // console.log(data);
+        const dataFromLocale = data.find((city) => city.name.toLowerCase() === searchTerm.toLowerCase());
+        if (dataFromLocale) {
+          setCities([dataFromLocale]);
+          return;
+        }
+      }
+    }
 
     try {
       const res = await fetch(
