@@ -97,11 +97,14 @@ const EditProfile = () => {
     };
 
     // Styling for input fields with validation
+    // Styling for input fields with validation
     const getInputStyle = (fieldName) => ({
         width: "100%",
         padding: "8px",
         borderRadius: "4px",
-        border: errors[fieldName] ? "1px solid #ef4444" : "1px solid #ddd"
+        border: errors[fieldName] ? "1px solid #ef4444" : "1px solid #ddd",
+        backgroundColor: "var(--bg-color)",
+        color: "var(--text-primary)"
     });
 
     const errorStyle = {
@@ -112,9 +115,9 @@ const EditProfile = () => {
     };
 
     return (
-        <div style={{ maxWidth: "400px", margin: "100px auto", padding: "20px", borderRadius: "8px", boxShadow: "0 0 10px rgba(0,0,0,0.1)", backgroundColor: "#fff" }}>
+        <div style={{ maxWidth: "400px", margin: "100px auto", padding: "20px", borderRadius: "8px", boxShadow: "0 0 10px rgba(0,0,0,0.1)", backgroundColor: "var(--card-bg)", color: "var(--text-primary)" }}>
             <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Edit Profile</h2>
-            {submitError && <div style={{ color: "red", marginBottom: "15px", textAlign: "center" }}>{submitError}</div>}
+            {submitError && <div style={{ color: "#ef4444", marginBottom: "15px", textAlign: "center" }}>{submitError}</div>}
 
             <form onSubmit={handleSubmit}>
                 <div style={{ marginBottom: "15px" }}>

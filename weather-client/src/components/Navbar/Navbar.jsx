@@ -14,16 +14,19 @@ import {
   ListItemIcon
 } from "@mui/material";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
 import LogoutIcon from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useTheme } from "../../context/ThemeContext";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, token, logout } = useAuth();
+  const { isDarkMode, toggleTheme } = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
@@ -76,13 +79,14 @@ const Navbar = () => {
         <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
 
           <IconButton
+            onClick={toggleTheme}
             sx={{
               color: "#fff",
               backgroundColor: "rgba(255,255,255,0.05)",
               "&:hover": { backgroundColor: "rgba(255,255,255,0.15)" }
             }}
           >
-            <DarkModeIcon fontSize="small" />
+            {isDarkMode ? <LightModeIcon fontSize="small" /> : <DarkModeIcon fontSize="small" />}
           </IconButton>
 
           {!token ? (

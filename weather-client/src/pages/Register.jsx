@@ -83,7 +83,9 @@ const Register = () => {
         marginBottom: errors[fieldName] ? "5px" : "10px",
         padding: "8px",
         border: errors[fieldName] ? "1px solid #ef4444" : "1px solid #ccc",
-        borderRadius: "4px"
+        borderRadius: "4px",
+        backgroundColor: "var(--card-bg)",
+        color: "var(--text-primary)"
     });
 
     const errorStyle = {
@@ -94,7 +96,7 @@ const Register = () => {
     };
 
     return (
-        <div style={{ maxWidth: "350px", margin: "100px auto" }}>
+        <div style={{ maxWidth: "350px", margin: "100px auto", color: "var(--text-primary)" }}>
             <h2>Register</h2>
             <form onSubmit={handleSubmit}>
                 <div style={{ marginBottom: "10px" }}>
