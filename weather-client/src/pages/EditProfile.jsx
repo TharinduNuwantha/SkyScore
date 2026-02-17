@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const EditProfile = () => {
     const { user, token, updateUser } = useAuth();
@@ -83,14 +84,16 @@ const EditProfile = () => {
 
             if (res.ok) {
                 updateUser(data.user);
-                alert("Profile updated successfully");
+                toast.success("Profile updated successfully");
                 navigate("/"); // Or stay on the page
             } else {
                 setSubmitError(data.message || "Failed to update profile");
+                toast.error(data.message || "Failed to update profile");
             }
         } catch (err) {
             console.error("Update error:", err);
             setSubmitError("An error occurred while updating profile");
+            toast.error("An error occurred while updating profile");
         } finally {
             setLoading(false);
         }

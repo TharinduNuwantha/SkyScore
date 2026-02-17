@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 const Register = () => {
     const navigate = useNavigate();
@@ -70,10 +71,10 @@ const Register = () => {
 
         if (res.ok) {
             login(data.user, data.token);
-            alert(data.message);
+            toast.success(data.message);
             navigate("/");
         } else {
-            alert(data.message || "Registration failed");
+            toast.error(data.message || "Registration failed");
         }
     };
 

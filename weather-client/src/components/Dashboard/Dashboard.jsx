@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import "./Dashboard.css";
 import ComfortChart from "./ComfortChart";
 import TemperatureLineChart from './TemperatureLineChart';
+import toast from "react-hot-toast";
 
 
 const Dashboard = () => {
@@ -72,7 +73,7 @@ const Dashboard = () => {
       const data = await res.json();
       setCities([data]);
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   }
 

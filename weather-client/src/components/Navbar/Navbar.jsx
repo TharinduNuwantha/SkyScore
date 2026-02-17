@@ -21,6 +21,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useTheme } from "../../context/ThemeContext";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const Navbar = () => {
   const handleLogout = () => {
     logout();
     handleCloseMenu();
-    alert("Logged out successfully");
+    toast.success("Logged out successfully");
     navigate("/login");
   };
 

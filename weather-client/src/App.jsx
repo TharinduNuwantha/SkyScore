@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { useAuth } from './context/AuthContext';
 import EditProfile from "./pages/EditProfile";
+import { Toaster } from "react-hot-toast";
 
 const ProtectedRoute = ({ children }) => {
   const { token, loading } = useAuth();
@@ -21,6 +22,7 @@ const ProtectedRoute = ({ children }) => {
 function App() {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" />
       <Navbar />
       <Routes>
         <Route path="/" element={

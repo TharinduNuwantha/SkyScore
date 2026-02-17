@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -21,8 +22,6 @@ const Login = () => {
                 break;
             case "password":
                 if (!value) error = "Password is required";
-                else if (value.length < 8) error = "Password must be at least 8 characters";
-                else if (!/(?=.*[a-zA-Z])(?=.*\d)/.test(value)) error = "Password must contain letters and numbers";
                 break;
             default:
                 break;
@@ -64,10 +63,10 @@ const Login = () => {
 
         if (res.ok) {
             login(data.user, data.token);
-            alert("Login successful");
+            toast.success("Login successful");
             navigate("/");
         } else {
-            alert(data.message || "Invalid credentials");
+            toast.error(data.message || "Invalid credentials");
         }
     };
 
