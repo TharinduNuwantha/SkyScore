@@ -1,9 +1,12 @@
-import express from "express"
+import express from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
+import { verifyToken } from "../middleware/authMiddleware.js";
+
 const router = express.Router();
 
+// Register
 router.post("/register", async (req, res) => {
     console.log("Registration attempt:", req.body);
     const { firstName, lastName, email, password } = req.body;
@@ -19,7 +22,7 @@ router.post("/register", async (req, res) => {
             lastName,
             email,
             password: hashedPassword
-        })
+        });
         await newUser.save();
 
         const token = jwt.sign(
@@ -44,13 +47,13 @@ router.post("/register", async (req, res) => {
         }
         res.status(500).json({ message: "Server error" });
     }
-})
+});
 
-//login
+// Login
 router.post("/login", async (req, res) => {
     const { email, password } = req.body;
     try {
-        const user = await User.findOne({ email })
+        const user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({ message: "Invalid credentials" });
         }
@@ -74,6 +77,50 @@ router.post("/login", async (req, res) => {
         });
     } catch (error) {
         console.error("Login error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// Verify token and get user
+router.get("/verify", verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.userId).select("-password");
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        res.json({ user });
+    } catch (error) {
+        console.error("Verify error:", error);
+        res.status(500).json({ message: "Server error" });
+    }
+});
+
+// Update user details
+router.put("/update", verifyToken, async (req, res) => {
+    try {
+        const { firstName, lastName, email } = req.body;
+        const user = await User.findById(req.user.userId);
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        if (firstName) user.firstName = firstName;
+        if (lastName) user.lastName = lastName;
+        if (email) user.email = email;
+
+        await user.save();
+
+        res.json({
+            message: "Profile updated successfully",
+            user: {
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email
+            }
+        });
+    } catch (error) {
+        console.error("Update error:", error);
         res.status(500).json({ message: "Server error" });
     }
 });

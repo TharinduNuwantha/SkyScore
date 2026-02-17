@@ -1,11 +1,15 @@
-/* Modern Color Palette & Variables */
 :root {
-  --primary-color: #0ea5e9;    /* Sky Blue 500 */
-  --primary-dark: #0284c7;     /* Sky Blue 600 */
-  --bg-color: #f0f9ff;         /* Sky Blue 50 */
+  --primary-color: #0ea5e9;
+  /* Sky Blue 500 */
+  --primary-dark: #0284c7;
+  /* Sky Blue 600 */
+  --bg-color: #f0f9ff;
+  /* Sky Blue 50 */
   --card-bg: #ffffff;
-  --text-primary: #0f172a;     /* Slate 900 */
-  --text-secondary: #64748b;   /* Slate 500 */
+  --text-primary: #0f172a;
+  /* Slate 900 */
+  --text-secondary: #64748b;
+  /* Slate 500 */
   --success: #22c55e;
   --warning: #f59e0b;
   --danger: #ef4444;
@@ -56,9 +60,8 @@ body {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
-  
-  /* Overriding Tailwind if needed, but flex gap is handled there. 
-     Just adding some container constraints for centering */
+
+
 }
 
 /* Target the input within the search section for modern styling */
@@ -66,7 +69,8 @@ body {
   flex: 1;
   padding: 12px 20px;
   border: 1px solid #e2e8f0;
-  border-radius: 50px; /* Pill shape */
+  border-radius: 50px;
+  /* Pill shape */
   font-size: 1rem;
   transition: all 0.2s ease;
   box-shadow: var(--shadow-sm);
@@ -146,12 +150,15 @@ body {
   letter-spacing: -0.025em;
   background: linear-gradient(to right, var(--text-primary), var(--text-secondary));
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent; /* Makes text gradient */
+  -webkit-text-fill-color: transparent;
+  /* Makes text gradient */
   display: inline-block;
 }
 
 /* Info Paragraphs */
-.weather, .temperature, .comfort-score {
+.weather,
+.temperature,
+.comfort-score {
   margin: 8px 0;
   font-size: 1rem;
   color: var(--text-secondary);
@@ -162,11 +169,14 @@ body {
   padding-bottom: 8px;
 }
 
-.weather:last-child, .temperature:last-child {
+.weather:last-child,
+.temperature:last-child {
   border-bottom: none;
 }
 
-.weather strong, .temperature strong, .comfort-score strong {
+.weather strong,
+.temperature strong,
+.comfort-score strong {
   color: var(--text-primary);
   font-weight: 600;
 }
@@ -200,7 +210,8 @@ body {
 
 /* Charts Section */
 .charts-section {
-  grid-column: 1 / -1; /* Spans full width */
+  grid-column: 1 / -1;
+  /* Spans full width */
   background-color: var(--card-bg);
   padding: 32px;
   border-radius: var(--radius-lg);
@@ -210,7 +221,8 @@ body {
 }
 
 /* Chart titles or content inside charts section */
-.charts-section h3, .charts-section h4 {
+.charts-section h3,
+.charts-section h4 {
   color: var(--text-primary);
   margin-bottom: 20px;
 }
@@ -229,6 +241,13 @@ body {
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
 }
