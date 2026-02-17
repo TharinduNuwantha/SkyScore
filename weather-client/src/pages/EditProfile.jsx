@@ -97,82 +97,58 @@ const EditProfile = () => {
     };
 
     // Styling for input fields with validation
-    // Styling for input fields with validation
-    const getInputStyle = (fieldName) => ({
-        width: "100%",
-        padding: "8px",
-        borderRadius: "4px",
-        border: errors[fieldName] ? "1px solid #ef4444" : "1px solid #ddd",
-        backgroundColor: "var(--bg-color)",
-        color: "var(--text-primary)"
-    });
-
-    const errorStyle = {
-        color: "#ef4444",
-        fontSize: "12px",
-        marginTop: "5px",
-        display: "block"
-    };
-
     return (
-        <div style={{ maxWidth: "400px", margin: "100px auto", padding: "20px", borderRadius: "8px", boxShadow: "0 0 10px rgba(0,0,0,0.1)", backgroundColor: "var(--card-bg)", color: "var(--text-primary)" }}>
-            <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Edit Profile</h2>
-            {submitError && <div style={{ color: "#ef4444", marginBottom: "15px", textAlign: "center" }}>{submitError}</div>}
+        <div className="page-container">
+            <div className="auth-card">
+                <h2 className="auth-title">Edit Profile</h2>
+                {submitError && <div className="error-message" style={{ textAlign: "center", marginBottom: "16px" }}>{submitError}</div>}
 
-            <form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: "15px" }}>
-                    <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>First Name</label>
-                    <input
-                        type="text"
-                        name="firstName"
-                        value={formState.firstName}
-                        onChange={handleChange}
-                        style={getInputStyle("firstName")}
-                    />
-                    {errors.firstName && <span style={errorStyle}>{errors.firstName}</span>}
-                </div>
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="form-group">
+                        <label style={{ fontWeight: "600", color: "var(--text-secondary)" }}>First Name</label>
+                        <input
+                            type="text"
+                            name="firstName"
+                            value={formState.firstName}
+                            onChange={handleChange}
+                            className={`form-input ${errors.firstName ? 'error' : ''}`}
+                        />
+                        {errors.firstName && <span className="error-message">{errors.firstName}</span>}
+                    </div>
 
-                <div style={{ marginBottom: "15px" }}>
-                    <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Last Name</label>
-                    <input
-                        type="text"
-                        name="lastName"
-                        value={formState.lastName}
-                        onChange={handleChange}
-                        style={getInputStyle("lastName")}
-                    />
-                    {errors.lastName && <span style={errorStyle}>{errors.lastName}</span>}
-                </div>
+                    <div className="form-group">
+                        <label style={{ fontWeight: "600", color: "var(--text-secondary)" }}>Last Name</label>
+                        <input
+                            type="text"
+                            name="lastName"
+                            value={formState.lastName}
+                            onChange={handleChange}
+                            className={`form-input ${errors.lastName ? 'error' : ''}`}
+                        />
+                        {errors.lastName && <span className="error-message">{errors.lastName}</span>}
+                    </div>
 
-                <div style={{ marginBottom: "20px" }}>
-                    <label style={{ display: "block", marginBottom: "5px", fontWeight: "bold" }}>Email</label>
-                    <input
-                        type="email"
-                        name="email"
-                        value={formState.email}
-                        onChange={handleChange}
-                        style={getInputStyle("email")}
-                    />
-                    {errors.email && <span style={errorStyle}>{errors.email}</span>}
-                </div>
+                    <div className="form-group">
+                        <label style={{ fontWeight: "600", color: "var(--text-secondary)" }}>Email</label>
+                        <input
+                            type="email"
+                            name="email"
+                            value={formState.email}
+                            onChange={handleChange}
+                            className={`form-input ${errors.email ? 'error' : ''}`}
+                        />
+                        {errors.email && <span className="error-message">{errors.email}</span>}
+                    </div>
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    style={{
-                        width: "100%",
-                        padding: "10px",
-                        backgroundColor: "#6366f1",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: loading ? "not-allowed" : "pointer",
-                        fontWeight: "bold"
-                    }}
-                >
-                    {loading ? "Updating..." : "Update Profile"}
-                </button>
-            </form>
+                    <button
+                        type="submit"
+                        disabled={loading}
+                        className="auth-button"
+                    >
+                        {loading ? "Updating..." : "Update Profile"}
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };

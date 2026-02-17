@@ -76,21 +76,46 @@ const Dashboard = () => {
     }
   }
 
-  return (
+  const handleReset = () => {
+    setSearchTerm("");
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const { data } = JSON.parse(cached);
+      setCities(data);
+    } else {
+      window.location.reload();
+    }
+  };
 
+  return (
     <div className="dashboard-container">
-      <form onSubmit={handleSearch} className="search-section mb-8 flex gap-2 max-w-md">
-        <input
-          type="text"
-          placeholder="Search any city (e.g. Paris, France)..."
-          className="flex-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sky-primary"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-        <button type="submit" className="bg-sky-primary text-white px-4 py-2 rounded-md font-bold">
-          Search
-        </button>
-      </form>
+      <div className="search-section">
+        <div className="search-wrapper">
+          <form onSubmit={handleSearch} className="search-form">
+            <input
+              type="text"
+              placeholder="Search city..."
+              className="search-input"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <div className="search-actions">
+              <button type="submit" className="search-btn">
+                Search
+              </button>
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={handleReset}
+                  className="reset-btn"
+                >
+                  Back
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
 
 
       {cities.map((city) => (
