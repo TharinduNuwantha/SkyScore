@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors"
 import "dotenv/config";
 import weatherRoutes from "./routes/weatherRoutes.js";
+import authRoutes from "./routes/authRoutes.js";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 dotenv.config();

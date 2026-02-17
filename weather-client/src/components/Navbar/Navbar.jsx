@@ -1,67 +1,203 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
   Avatar,
-  Box
+  Box,
+  Button,
+  Menu,
+  MenuItem,
+  Tooltip,
+  Divider,
+  ListItemIcon
 } from "@mui/material";
-import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LogoutIcon from "@mui/icons-material/Logout";
+import PersonIcon from "@mui/icons-material/Person";
+import EditIcon from "@mui/icons-material/Edit";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleOpenMenu = (event) => setAnchorEl(event.currentTarget);
+  const handleCloseMenu = () => setAnchorEl(null);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    handleCloseMenu();
+    alert("Logged out successfully");
+    navigate("/login");
+  };
+
   return (
     <AppBar
       position="sticky"
       elevation={0}
       sx={{
         background: "linear-gradient(135deg, #0f172a, #1e293b)",
-        backdropFilter: "blur(10px)"
+        backdropFilter: "blur(10px)",
+        zIndex: 1100,
+        borderBottom: "1px solid rgba(255,255,255,0.1)"
       }}
     >
       <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
-        
+
         <Typography
           variant="h6"
+          component={Link}
+          to="/"
           sx={{
-            fontWeight: 700,
+            fontWeight: 800,
             letterSpacing: 1,
             background: "linear-gradient(90deg, #38bdf8, #6366f1)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
-            cursor: "pointer"
+            cursor: "pointer",
+            textDecoration: "none",
+            fontSize: "1.5rem"
           }}
         >
           SkyScore
         </Typography>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          
-          {/* Dark  Button */}
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
+
           <IconButton
             sx={{
               color: "#fff",
-              backgroundColor: "rgba(255,255,255,0.1)",
-              "&:hover": {
-                backgroundColor: "rgba(255,255,255,0.2)"
-              }
+              backgroundColor: "rgba(255,255,255,0.05)",
+              "&:hover": { backgroundColor: "rgba(255,255,255,0.15)" }
             }}
           >
-            <DarkModeIcon />
-
+            <DarkModeIcon fontSize="small" />
           </IconButton>
 
-
-          <Avatar
-            alt="User Profile"
-            src="https://i.pravatar.cc/300"
-            sx={{
-              width: 38,
-              height: 38,
-              border: "2px solid #6366f1"
-            }}
-          />
+          {!token ? (
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <Button
+                component={Link}
+                to="/login"
+                sx={{
+                  color: '#fff',
+                  textTransform: 'none',
+                  fontWeight: 600
+                }}
+              >
+                Login
+              </Button>
+              <Button
+                component={Link}
+                to="/register"
+                variant="contained"
+                sx={{
+                  background: "linear-gradient(135deg, #0ea5e9, #6366f1)",
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  borderRadius: '20px',
+                  px: 3
+                }}
+              >
+                Register
+              </Button>
+            </Box>
+          ) : (
+            <>
+              <Tooltip title="Account profile">
+                <IconButton
+                  onClick={handleOpenMenu}
+                  size="small"
+                  sx={{ ml: 1, p: 0 }}
+                  aria-controls={open ? 'account-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? 'true' : undefined}
+                >
+                  <Avatar
+                    alt={user.firstName}
+                    sx={{
+                      width: 42,
+                      height: 42,
+                      bgcolor: "#6366f1",
+                      border: "2px solid rgba(255,255,255,0.2)",
+                      fontSize: '1.2rem',
+                      fontWeight: 700,
+                      boxShadow: "0 4px 12px rgba(99, 102, 241, 0.3)"
+                    }}
+                  >
+                    {user.firstName ? user.firstName[0].toUpperCase() : <PersonIcon />}
+                  </Avatar>
+                </IconButton>
+              </Tooltip>
+              <Menu
+                anchorEl={anchorEl}
+                id="account-menu"
+                open={open}
+                onClose={handleCloseMenu}
+                onClick={handleCloseMenu}
+                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                PaperProps={{
+                  elevation: 0,
+                  sx: {
+                    overflow: 'visible',
+                    filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                    mt: 1.5,
+                    bgcolor: '#1e293b',
+                    color: '#fff',
+                    minWidth: 220,
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    '&:before': {
+                      content: '""',
+                      display: 'block',
+                      position: 'absolute',
+                      top: 0,
+                      right: 14,
+                      width: 10,
+                      height: 10,
+                      bgcolor: '#1e293b',
+                      transform: 'translateY(-50%) rotate(45deg)',
+                      zIndex: 0,
+                      borderTop: '1px solid rgba(255,255,255,0.1)',
+                      borderLeft: '1px solid rgba(255,255,255,0.1)',
+                    },
+                  },
+                }}
+              >
+                <Box sx={{ px: 2, py: 2 }}>
+                  <Typography variant="subtitle1" sx={{ fontWeight: 700, lineHeight: 1.2 }}>
+                    {user.firstName} {user.lastName}
+                  </Typography>
+                  <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.6)', mt: 0.5, wordBreak: 'break-all' }}>
+                    {user.email}
+                  </Typography>
+                </Box>
+                <Divider sx={{ bgcolor: 'rgba(255,255,255,0.1)' }} />
+                <MenuItem onClick={handleCloseMenu} sx={{ py: 1.5 }}>
+                  <ListItemIcon>
+                    <EditIcon fontSize="small" sx={{ color: '#38bdf8' }} />
+                  </ListItemIcon>
+                  <Typography sx={{ fontWeight: 500 }}>Edit Details</Typography>
+                </MenuItem>
+                <MenuItem onClick={handleLogout} sx={{ py: 1.5 }}>
+                  <ListItemIcon>
+                    <LogoutIcon fontSize="small" sx={{ color: '#ef4444' }} />
+                  </ListItemIcon>
+                  <Typography sx={{ color: '#ef4444', fontWeight: 600 }}>
+                    Logout
+                  </Typography>
+                </MenuItem>
+              </Menu>
+            </>
+          )}
         </Box>
       </Toolbar>
     </AppBar>
